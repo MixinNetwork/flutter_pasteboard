@@ -30,7 +30,7 @@ public class PasteboardPlugin: NSObject, FlutterPlugin {
             result(nil)
             return
         }
-        result(image.tiffRepresentation)
+        result(image.png)
     }
 
     private func absoluteUrlString(result: FlutterResult) {
@@ -51,3 +51,13 @@ public class PasteboardPlugin: NSObject, FlutterPlugin {
     }
 }
 
+
+extension NSBitmapImageRep {
+    var png: Data? { representation(using: .png, properties: [:]) }
+}
+extension Data {
+    var bitmap: NSBitmapImageRep? { NSBitmapImageRep(data: self) }
+}
+extension NSImage {
+    var png: Data? { tiffRepresentation?.bitmap?.png }
+}
